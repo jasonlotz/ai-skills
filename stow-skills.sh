@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-SKILLS_DIR="$(dirname "$0")/skills"
+SKILLS_DIR="$(cd "$(dirname "$0")" && pwd)/skills"
 OPENCODE_SKILLS="$HOME/.config/opencode/skills"
 CLAUDE_SKILLS="$HOME/.claude/skills"
 
