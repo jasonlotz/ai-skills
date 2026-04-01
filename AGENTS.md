@@ -2,7 +2,7 @@
 
 ## Goal
 
-A collection of reusable AI agent skills for use with OpenCode and Claude. Skills are stored in a tool-agnostic directory structure and deployed to each tool's expected location via `stow-skills.sh`.
+A collection of reusable AI agent skills for use with OpenCode and Claude. Skills are stored in a tool-agnostic directory structure and deployed to each tool's expected location via `link-skills.sh`.
 
 ---
 
@@ -18,12 +18,14 @@ A collection of reusable AI agent skills for use with OpenCode and Claude. Skill
 ## Code Style & Conventions
 
 ### Skill Frontmatter
+
 - Required fields: `name`, `description`
 - Optional fields: `license`, `compatibility`, `metadata`
 - `description` should be specific enough for an agent to decide whether to load the skill (1–1024 chars)
-- `compatibility` should be set to `opencode` unless the skill is tool-specific
+- `compatibility`: use `opencode` for tool-agnostic skills, `claude` for Claude-specific ones
 
 ### Skill Content
+
 - Write instructions in plain markdown after the frontmatter
 - Include a "What I do" section, a "When to use me" section, and an "Instructions" section
 - Keep skills focused on a single responsibility
@@ -36,9 +38,10 @@ A collection of reusable AI agent skills for use with OpenCode and Claude. Skill
 skills/
   <skill-name>/
     SKILL.md
-stow-skills.sh    — symlinks each skill into OpenCode and Claude skill directories
+link-skills.sh    — symlinks each skill into OpenCode and Claude skill directories
 README.md
-AGENTS.md
+AGENTS.md         — project context for AI coding agents (Codex, Gemini, etc.)
+CLAUDE.md         — Claude Code entry point; references AGENTS.md
 ```
 
 ---
@@ -47,4 +50,4 @@ AGENTS.md
 
 1. Create `skills/<skill-name>/SKILL.md`
 2. Ensure `name` in frontmatter matches the directory name exactly
-3. Run `./stow-skills.sh` from the repo root to deploy
+3. Run `./link-skills.sh` from the repo root to deploy

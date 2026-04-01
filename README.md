@@ -17,8 +17,7 @@ Each skill is a directory containing a single `SKILL.md` file with YAML frontmat
 Run the install script from the repo root:
 
 ```bash
-chmod +x stow-skills.sh
-./stow-skills.sh
+bash link-skills.sh
 ```
 
 This symlinks each skill directory into the expected locations for each tool:
@@ -28,10 +27,16 @@ This symlinks each skill directory into the expected locations for each tool:
 | OpenCode | `~/.config/opencode/skills/<name>` |
 | Claude | `~/.claude/skills/<name>` |
 
-Re-run `stow-skills.sh` whenever you add a new skill.
+Re-run `link-skills.sh` whenever you add a new skill.
 
 ## Adding a skill
 
+Use the `/simple-skill-template` or `/advanced-skill-template` skill for a reference guide, or follow these steps:
+
 1. Create a new directory under `skills/` matching the skill name
 2. Add a `SKILL.md` with valid frontmatter (`name` must match the directory name)
-3. Run `./stow-skills.sh`
+3. Run `bash link-skills.sh`
+
+## AI agent context
+
+See [AGENTS.md](AGENTS.md) for conventions, rules, and project context used by AI coding agents (Codex, Gemini, etc.). Claude Code reads [CLAUDE.md](CLAUDE.md), which points there as well.

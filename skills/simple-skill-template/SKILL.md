@@ -1,17 +1,17 @@
 ---
-name: skill-template
-description: Reference implementation that outputs a guide for creating new skills in this repo
+name: simple-skill-template
+description: Reference guide for the minimal skill format — directory structure, required frontmatter fields, required sections, and how to register a new skill
 license: MIT
 compatibility: claude
 ---
 
 ## What I do
 
-Output a complete reference guide explaining the skill system and how to create a new skill from scratch.
+Output a concise reference guide for creating a basic skill with just a `SKILL.md`.
 
 ## When to use me
 
-Use this skill when you want a reminder of the skill file format, naming rules, required sections, and how to register a new skill.
+Use this skill when you want a quick reminder of the minimal skill file format, naming rules, required sections, and how to register a new skill. For advanced patterns (supporting directories, full frontmatter fields), use `/advanced-skill-template` instead.
 
 ## Instructions
 
@@ -19,7 +19,7 @@ Respond with the following guide exactly:
 
 ---
 
-# How to Create a New Skill
+# How to Create a New Skill (Simple)
 
 ## Directory structure
 
@@ -73,7 +73,7 @@ Every skill should have:
 After creating `skills/<skill-name>/SKILL.md`, run from the repo root:
 
 ```sh
-./stow-skills.sh
+./link-skills.sh
 ```
 
 This creates symlinks at:
@@ -87,4 +87,4 @@ This creates symlinks at:
 - [ ] `name` in frontmatter matches directory name exactly
 - [ ] `description` is specific and under 1024 chars
 - [ ] Three required sections present (What I do, When to use me, Instructions)
-- [ ] `./stow-skills.sh` run to deploy symlinks
+- [ ] `./link-skills.sh` run to deploy symlinks
