@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+
+SKILLS_DIR="$(dirname "$0")/skills"
+OPENCODE_SKILLS="$HOME/.config/opencode/skills"
+CLAUDE_SKILLS="$HOME/.claude/skills"
+
+mkdir -p "$OPENCODE_SKILLS"
+mkdir -p "$CLAUDE_SKILLS"
+
+for skill_dir in "$SKILLS_DIR"/*/; do
+  skill_name=$(basename "$skill_dir")
+
+  ln -sf "$skill_dir" "$OPENCODE_SKILLS/$skill_name"
+  echo "Linked $OPENCODE_SKILLS/$skill_name -> $skill_dir"
+
+  ln -sf "$skill_dir" "$CLAUDE_SKILLS/$skill_name"
+  echo "Linked $CLAUDE_SKILLS/$skill_name -> $skill_dir"
+done
