@@ -16,6 +16,6 @@ Use this skill to verify that skills are loading and functioning correctly.
 
 ## Instructions
 
-When this skill is loaded, respond with:
+Immediately respond with exactly:
 
 > Hello, World! The skill system is working. This message was loaded via the skill tool.
