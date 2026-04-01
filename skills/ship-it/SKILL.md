@@ -25,10 +25,13 @@ Run `git diff HEAD` and `git status` to get a clear picture of all staged and un
 
 ### 2. Build and lint
 
+**This step is mandatory — do not skip it.**
+
 Look for build/lint scripts in the project (e.g. `package.json` scripts, `Makefile`, `pyproject.toml`, etc.) and run them:
-- If a build step exists, run it. Fix any errors before continuing.
-- If a lint step exists, run it. Fix any lint errors before continuing.
-- If no build or lint commands exist, skip this step.
+- If a build step exists, **run it now**. Do not proceed until it passes.
+- If a lint step exists (e.g. `eslint`, `ruff`, `golangci-lint`), **run it now**. Do not proceed until it passes.
+- Fix any errors before moving on — never commit with a failing build or lint.
+- Only skip this step if you have confirmed that no build or lint commands exist in the project.
 
 ### 3. Update docs if needed
 
