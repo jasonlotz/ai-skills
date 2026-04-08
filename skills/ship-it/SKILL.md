@@ -33,6 +33,8 @@ Look for build/lint scripts in the project (e.g. `package.json` scripts, `Makefi
 - Fix any errors before moving on — never commit with a failing build or lint.
 - Only skip this step if you have confirmed that no build or lint commands exist in the project.
 
+**Go projects:** If a `go.mod` is present, run `go install ./...` to build and install the binary to `$GOPATH/bin`. Do not use `go run` here — that is for local testing only. The install must succeed before committing.
+
 ### 3. Update docs if needed
 
 Read `AGENTS.md` and `README.md`. Compare them against the changes from step 1. Update either file if:
