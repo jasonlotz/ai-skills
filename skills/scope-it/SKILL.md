@@ -20,6 +20,7 @@ Use me at the start of any non-trivial piece of work, before writing a single li
 
 - You have a GitHub issue that needs fleshing out before you start
 - You have an idea in your head but no issue yet — I'll help you shape and capture it
+- You've been talking through an idea mid-conversation and want to formalize it into a GitHub issue — just invoke me and I'll pick up where the conversation left off
 - You want a clear task checklist to work from so nothing falls through the cracks
 
 Invoke me with: `/scope-it [issue-number]`
@@ -32,18 +33,22 @@ Examples:
 
 ### Step 1: Detect input
 
-Check whether an issue number was passed as an argument.
+There are three modes of invocation — detect which applies:
 
-**If an issue number was provided:**
+**Mode A — Issue number provided** (e.g. `/scope-it 42`):
 
 Run:
 ```sh
 gh issue view <n>
 ```
 
-Display the issue title, body, labels, and assignees to the user. Use this as the starting context for the conversation — you do not need to ask "what are you building?" since the issue already answers that. Instead, move directly to targeted follow-up questions to fill gaps.
+Display the issue title, body, labels, and assignees to the user. Use this as the starting context — skip "what are you building?" and move directly to targeted follow-up questions to fill gaps.
 
-**If no issue number was provided:**
+**Mode B — No issue number, prior conversation exists:**
+
+If the user has already been discussing an idea or feature in the current conversation, do not ask them to re-explain it. You already have the context. Briefly summarize what you understand them to want (1-2 sentences) and ask if that's the right starting point before moving to step 2.
+
+**Mode C — No issue number, no prior context:**
 
 Start the conversation cold from step 2.
 
@@ -53,7 +58,7 @@ Start the conversation cold from step 2.
 
 Ask questions **one at a time** — do not present a list of questions all at once. Wait for the user's answer before asking the next question. The goal is to build a shared understanding of the work before proposing a plan.
 
-Key things to uncover (not a script — adapt based on what you already know from the issue or prior answers):
+Key things to uncover (not a script — adapt based on what you already know from the issue, prior conversation, or prior answers):
 
 - What problem does this solve, or what is the user trying to build?
 - Who is affected or benefits from this?
@@ -61,7 +66,7 @@ Key things to uncover (not a script — adapt based on what you already know fro
 - Are there existing patterns, components, or conventions in the codebase this should follow?
 - Are there any open questions or risks that should be noted?
 
-If an issue was fetched in step 1, use its content to skip questions that are already clearly answered. Only ask about genuine gaps.
+Skip any question already clearly answered by the issue or prior conversation. Only ask about genuine gaps.
 
 Keep the conversation tight — 2 to 4 questions is usually enough. Stop asking when you have enough to write a solid plan.
 
