@@ -78,3 +78,20 @@ git push
 If the branch has no upstream, use `git push -u origin <branch>`.
 
 After pushing, confirm success and report the commit hash and message to the user.
+
+### 7. Close the GitHub issue
+
+Check the conversation context for a GitHub issue number associated with this work — set by a prior `/scope-it` session, mentioned by the user, or referenced in commit messages.
+
+- If you are confident of the issue number → proceed
+- If you are unsure → ask: *"Is there a GitHub issue associated with this work? If so, what's the number?"*
+- If the user confirms no issue → skip this step silently
+
+Once you have the issue number:
+
+```sh
+gh issue comment <n> --body "Implemented in <short-hash>"
+gh issue close <n>
+```
+
+Report the closed issue URL to the user.
