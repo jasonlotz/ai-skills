@@ -151,3 +151,7 @@ Issue #42 is updated: <url>
 
 Scope is locked. Ready to build whenever you are.
 ```
+
+**STOP HERE.**
+
+Do not enter plan mode, start coding, create files, run commands, or take any implementation action. Your job is complete. The user will explicitly tell you when to proceed with the work.
