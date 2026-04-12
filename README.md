@@ -31,7 +31,7 @@ Re-run `link-skills.sh` whenever you add a new skill.
 
 ## Adding a skill
 
-Use the `/simple-skill-template` or `/advanced-skill-template` skill for a reference guide, or follow these steps:
+Follow these steps:
 
 1. Create a new directory under `skills/` matching the skill name
 2. Add a `SKILL.md` with valid frontmatter (`name` must match the directory name)

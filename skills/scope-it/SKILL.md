@@ -1,6 +1,6 @@
 ---
 name: scope-it
-description: Scopes a feature before you start building — looks up or creates a GitHub issue, works through a plan conversationally, and updates the issue with an agreed task checklist so you're ready to code. Pairs with ship-it.
+description: Scopes a feature before you start building — looks up or creates a GitHub issue, works through a plan conversationally, and updates the issue with an agreed task checklist so you're ready to code. Pairs with ship-it and review-it.
 license: MIT
 compatibility: opencode
 ---
@@ -21,6 +21,7 @@ Use me at the start of any non-trivial piece of work, before writing a single li
 - You have a GitHub issue that needs fleshing out before you start
 - You have an idea in your head but no issue yet — I'll help you shape and capture it
 - You've been talking through an idea mid-conversation and want to formalize it into a GitHub issue — just invoke me and I'll pick up where the conversation left off
+- A `review-it` session surfaced issues you want to track and plan — scope them into a GitHub issue
 - You want a clear task checklist to work from so nothing falls through the cracks
 
 Invoke me with: `/scope-it [issue-number]`
