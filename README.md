@@ -20,14 +20,21 @@ Run the install script from the repo root:
 bash link-skills.sh
 ```
 
-This symlinks each skill directory into the expected locations for each tool:
+The script auto-detects your OS and symlinks each skill directory into the expected locations:
 
-| Tool | Path |
-| --- | --- |
-| OpenCode | `~/.config/opencode/skills/<name>` |
-| Claude | `~/.claude/skills/<name>` |
+| Tool | macOS / Linux | Windows |
+| --- | --- | --- |
+| OpenCode | `~/.config/opencode/skills/<name>` | `%APPDATA%\opencode\skills\<name>` |
+| Claude | `~/.claude/skills/<name>` | `%USERPROFILE%\.claude\skills\<name>` |
 
 Re-run `link-skills.sh` whenever you add a new skill.
+
+### Windows
+
+Run the script in **Git Bash** (or MSYS2/Cygwin). Symlinks on Windows require one of:
+
+- [Developer Mode](https://docs.microsoft.com/en-us/windows/apps/get-started/enable-your-device-for-development) enabled, or
+- Running Git Bash as Administrator
 
 ## Adding a skill
 
