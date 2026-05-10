@@ -10,11 +10,13 @@ skills/
     SKILL.md     — skill definition (frontmatter + instructions)
 hooks/
   <hook>.sh      — Claude Code harness hooks (e.g. SessionStart)
+bin/
+  <script>.sh    — standalone CLI scripts (typically invoked by a paired skill)
 ```
 
 Each skill is a directory containing a single `SKILL.md` file with YAML frontmatter (`name`, `description`) followed by markdown instructions.
 
-Hooks are shell scripts invoked by the Claude Code harness — see [Hooks](#hooks) below.
+Hooks are shell scripts invoked by the Claude Code harness — see [Hooks](#hooks) below. Standalone scripts live under `bin/` — see [Bin Scripts](#bin-scripts).
 
 ## Setup
 
@@ -53,6 +55,24 @@ Current hooks:
   worktree of a Next.js project, symlinks `.env` / `.env.local` from the main
   checkout and runs `npm ci` if `node_modules` is missing. No-op outside
   worktrees and on non-Next.js projects.
+
+## Bin Scripts
+
+Standalone scripts under `bin/` hold logic that's easier to test and version
+as shell. They're typically invoked by a paired skill (so the user calls
+`/skill-name`, the skill runs the script). `link-skills.sh` makes them
+executable; `bin/` is not added to `PATH`.
+
+Current scripts:
+
+- `worktree-janitor.sh` — paired with the `worktree-janitor` skill. Sweeps
+  Claude Code worktree leftovers in two passes: orphan
+  `.claude/worktrees/<name>/` directory stubs that git no longer tracks, and
+  merged local `claude/*` branches with no active worktree. Unmerged
+  `claude/*` branches are listed for review but never deleted. Flags: `-y`
+  skips the prompt, `--dry-run` lists without deleting. Defaults to the
+  current repo; pass paths to scan multiple (e.g.
+  `worktree-janitor.sh ~/Workspaces/fleet/*`).
 
 ## AI agent context
 

@@ -40,7 +40,9 @@ skills/
     SKILL.md
 hooks/
   <hook-name>.sh   — Claude Code harness hooks, referenced by absolute path from settings.json
-link-skills.sh    — symlinks skills into OpenCode/Claude dirs and prepares hooks
+bin/
+  <script>.sh      — standalone CLI scripts (typically invoked by a paired skill)
+link-skills.sh    — symlinks skills into OpenCode/Claude dirs and prepares hooks/bin scripts
 README.md
 AGENTS.md         — project context for AI coding agents (Codex, Gemini, etc.)
 CLAUDE.md         — Claude Code entry point; references AGENTS.md
@@ -66,3 +68,17 @@ referenced by absolute path from `~/.claude/settings.json`.
 2. Run `./link-skills.sh` to make it executable; the script prints the
    `settings.json` snippet to copy in
 3. Keep hooks fast and idempotent — they may run on every session start
+
+---
+
+## Adding a Bin Script
+
+Standalone scripts under `bin/` are typically invoked by a paired skill (so
+the user calls the skill, the skill runs the script). Keeping the bash in a
+file rather than embedded in `SKILL.md` makes it testable with `bash -n` and
+syntax-checkable in editors.
+
+1. Create `bin/<script-name>.sh` with a shebang
+2. Create a paired `skills/<script-name>/SKILL.md` whose Instructions invoke
+   the script by absolute path (e.g. `~/Workspaces/ai-skills/bin/<name>.sh`)
+3. Run `./link-skills.sh` to make the script executable and link the skill

@@ -4,6 +4,7 @@ set -e
 REPO_ROOT="$(cd "$(dirname "$0")" && pwd)"
 SKILLS_DIR="$REPO_ROOT/skills"
 HOOKS_DIR="$REPO_ROOT/hooks"
+BIN_DIR="$REPO_ROOT/bin"
 OPENCODE_SKILLS="$HOME/.config/opencode/skills"
 CLAUDE_SKILLS="$HOME/.claude/skills"
 
@@ -45,4 +46,16 @@ Hooks are checked in but not auto-wired. To enable worktree-setup, add to
   }
 }
 EOF
+fi
+
+if [ -d "$BIN_DIR" ]; then
+  for script in "$BIN_DIR"/*.sh; do
+    [ -f "$script" ] || continue
+    chmod +x "$script"
+    echo "Made executable: $script"
+  done
+
+  echo ""
+  echo "Bin scripts made executable. They are typically invoked by their"
+  echo "paired skill (e.g. /worktree-janitor) — no PATH or alias needed."
 fi
