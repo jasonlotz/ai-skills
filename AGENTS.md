@@ -38,7 +38,9 @@ A collection of reusable AI agent skills for use with OpenCode and Claude. Skill
 skills/
   <skill-name>/
     SKILL.md
-link-skills.sh    — symlinks each skill into OpenCode and Claude skill directories
+hooks/
+  <hook-name>.sh   — Claude Code harness hooks, referenced by absolute path from settings.json
+link-skills.sh    — symlinks skills into OpenCode/Claude dirs and prepares hooks
 README.md
 AGENTS.md         — project context for AI coding agents (Codex, Gemini, etc.)
 CLAUDE.md         — Claude Code entry point; references AGENTS.md
@@ -51,3 +53,16 @@ CLAUDE.md         — Claude Code entry point; references AGENTS.md
 1. Create `skills/<skill-name>/SKILL.md`
 2. Ensure `name` in frontmatter matches the directory name exactly
 3. Run `./link-skills.sh` from the repo root to deploy
+
+---
+
+## Adding a Hook
+
+Hooks are shell scripts invoked by the Claude Code harness (`SessionStart`,
+`PreToolUse`, etc.). Unlike skills they are not auto-loaded — they must be
+referenced by absolute path from `~/.claude/settings.json`.
+
+1. Create `hooks/<hook-name>.sh` with a shebang
+2. Run `./link-skills.sh` to make it executable; the script prints the
+   `settings.json` snippet to copy in
+3. Keep hooks fast and idempotent — they may run on every session start
