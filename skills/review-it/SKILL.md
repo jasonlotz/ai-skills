@@ -8,7 +8,7 @@ compatibility: opencode
 ## What I do
 
 - Reviews code thoroughly for best practices, DRY violations, maintainability issues, naming clarity, separation of concerns, error handling, and security/performance concerns
-- Works conversationally — asks clarifying questions as needed rather than dumping a wall of findings
+- Works conversationally — presents an inventory of findings up front, then walks through them one at a time so you can respond to each in turn
 - Accepts a specific scope (file path, PR number, git diff) or defaults to recent changes when none is provided
 - Explains each finding clearly: what the issue is, why it matters, and a concrete suggestion for fixing it
 - Closes with a summary of overall code health and the top priorities to address
@@ -49,33 +49,56 @@ Before reviewing, briefly tell the user what scope you're working with (e.g. "Re
 
 ---
 
-### Step 2: Explore the code thoroughly
+### Step 2: Complete the full review before surfacing anything
 
-Do not skim. Read the full content of every relevant file before forming opinions. For each file or diff:
+Do the entire analysis silently first. **Do not share findings, raise concerns, or ask questions during this step.** The user should not see any review output until Step 3a — they want the complete picture, not a running commentary.
+
+Read the full content of every relevant file. For each file or diff:
 
 - Understand the purpose and responsibility of the code
 - Identify how it fits into the broader codebase (imports, dependencies, callers)
 - Look for patterns — both good ones to reinforce and problematic ones to flag
+- Apply every lens from Step 4 and assemble your full list of findings
 
-If you need more context to make a confident judgment (e.g. a type definition, a related module, a shared utility), go find it. Do not guess.
+If you need more context to make a confident judgment (e.g. a type definition, a related module, a shared utility), go find it. Do not guess. Brief progress updates ("Reading auth module...") are fine; findings are not.
+
+Only once the review is fully formed — every finding identified, prioritized, and ready to present — proceed to Step 3.
 
 ---
 
-### Step 3: Conduct the review conversationally
+### Step 3: Present an inventory, then walk through findings one by one
 
-Do **not** dump all findings at once. Work through the review in logical chunks — by file, by concern area, or by severity. After each chunk, pause and ask if the user wants to dig deeper, has context that changes your read, or is ready to move on.
+**Do not dump all findings at once. Do not end with a list of open questions.** The user can only respond to one thing at a time, so structure the review for that.
 
-Lead with the most important findings. If there are 10 minor style nits and 2 architectural concerns, surface the architectural concerns first.
-
-For each finding, be specific and actionable:
+**3a. Inventory first (one short message).** After exploring, post a numbered roadmap of what you found — title + area + severity only, no details yet. Order by severity: architectural/correctness/security first, style nits last. Example:
 
 ```
-**[Area]** Short description of the issue
+Found 5 things worth discussing. I'll walk through them one at a time.
+
+1. [Architecture] Auth check duplicated across 3 routes — high
+2. [Correctness] `parseUser` swallows errors silently — high
+3. [Naming] `data` / `result` used ambiguously in `pipeline.ts` — medium
+4. [DRY] Two near-identical date formatters — low
+5. [Style] Inconsistent import ordering — low
+
+Starting with #1.
+```
+
+**3b. Then one finding per turn.** Present a single finding using the format below, and stop. Wait for the user's response before moving on. Do **not** preview the next finding, do **not** ask multiple questions in the same turn, do **not** stack findings.
+
+```
+**#N — [Area]** Short description
 
 Why it matters: <1-2 sentences on the impact>
 
-Suggestion: <concrete fix or alternative approach, with code if helpful>
+Suggestion: <concrete fix or alternative, with code if helpful>
+
+Want me to: **(f)** apply the fix, **(s)** skip, **(d)** discuss, or **(n)** next without deciding?
 ```
+
+**3c. Honor the user's response, then advance.** If they pick fix, make the change and confirm before moving on. If skip/next, move to the next finding. If discuss, engage on that one finding only — do not branch into other findings mid-discussion. When all findings are addressed, proceed to Step 5.
+
+If the user wants to batch-process (e.g. "just fix all the low-severity ones"), do that — the one-at-a-time rule is the default, not a straitjacket.
 
 ---
 
