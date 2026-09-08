@@ -24,13 +24,16 @@ into it (created by `bash ~/Workspaces/ai-skills/link-skills.sh`), so a change i
 Claude Code and OpenCode the moment it is saved -- nothing to copy or reinstall. The repo is
 git-tracked, so commit the change with a `feat:`/`fix:` message.
 
-**Claude Desktop is a THIRD store and does NOT share the symlink.** It keeps its own copy
-under `~/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/
-<ids>/skills/vault-curator/`, mounted read-only by Cowork and updated only by importing a
-`.skill` archive (a plain zip renamed `.skill`, containing `SKILL.md`, `scripts/*.py`, and
-`assets/templates/*.md` at the root) through the Save button. So after changing behavior
-here, REBUILD that archive and tell Jason to re-import it, or Desktop silently keeps running
-the old version. Say so explicitly rather than assuming the two are in sync.
+**Claude Desktop reads the same folder** (set up 2026-09-08). Its skill store at
+`~/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/<ids>/skills/`
+holds a SYMLINK to this repo rather than its own copy, so Desktop, Claude Code, and OpenCode
+all resolve to one file and cannot drift. Nothing to rebuild or re-import after an edit.
+
+The one failure mode: a Desktop app update may re-provision that store and replace the
+symlink with a fresh private copy. If Desktop starts behaving like an older version of this
+skill, that is what happened -- re-run `bash ~/Workspaces/ai-skills/link-skills.sh`, which
+re-points any shared skill that reverted (backing up the copy it replaces). As a last resort
+`bash bin/build-skill.sh vault-curator` produces a `.skill` archive to import by hand.
 
 **Operating notes for future runs.**
 

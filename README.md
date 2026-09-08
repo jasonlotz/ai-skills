@@ -35,16 +35,18 @@ This symlinks each skill directory into the expected locations for each tool:
 | OpenCode | `~/.config/opencode/skills/<name>` |
 | Claude Code | `~/.claude/skills/<name>` |
 
-**Claude Desktop is not covered by `link-skills.sh`.** It keeps its own read-only skill
-store and can only be updated by importing a `.skill` archive (a zip renamed `.skill`)
-through the Save button in the app. Build one with:
+| Claude Desktop | `~/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/<ids>/skills/<name>` |
 
-```bash
-bash bin/build-skill.sh <skill-name>
-```
+**Claude Desktop is handled conservatively.** Its store lives under an app-managed UUID path
+and also contains Anthropic's own built-in skills (`docx`, `pdf`, `pptx`, `xlsx`,
+`skill-creator`, …), which this repo must not touch. So `link-skills.sh` only re-points
+skills Desktop **already has** — it never pushes new ones in. Desktop's skill set stays as
+you curated it, and the coding-workflow skills here don't clutter it.
 
-Re-import it in Desktop after any change you want reflected there — the symlinks above do
-not reach it, so Desktop will otherwise keep running the version it last imported.
+A Desktop app update can re-provision that store and replace a symlink with a private copy.
+Re-running `link-skills.sh` fixes it (backing up whatever it replaces into `dist/`). If
+symlinks ever stop working there, `bash bin/build-skill.sh <name>` builds a `.skill` archive
+to import through the app's Save button as a fallback.
 
 Re-run `link-skills.sh` whenever you add a new skill.
 
