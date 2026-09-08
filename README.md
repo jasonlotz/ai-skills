@@ -8,13 +8,15 @@ A collection of reusable AI agent skills for use with OpenCode and Claude.
 skills/
   <skill-name>/
     SKILL.md     — skill definition (frontmatter + instructions)
+    scripts/     — optional; helper scripts the skill invokes
+    assets/      — optional; templates and other files the skill reads
 hooks/
   <hook>.sh      — Claude Code harness hooks (e.g. SessionStart)
 bin/
   <script>.sh    — standalone CLI scripts (typically invoked by a paired skill)
 ```
 
-Each skill is a directory containing a single `SKILL.md` file with YAML frontmatter (`name`, `description`) followed by markdown instructions.
+Each skill is a directory containing a `SKILL.md` file with YAML frontmatter (`name`, `description`) followed by markdown instructions. Most skills are just that one file; a skill may also ship `scripts/` and `assets/` alongside it (see `vault-curator`).
 
 Hooks are shell scripts invoked by the Claude Code harness — see [Hooks](#hooks) below. Standalone scripts live under `bin/` — see [Bin Scripts](#bin-scripts).
 
@@ -31,7 +33,18 @@ This symlinks each skill directory into the expected locations for each tool:
 | Tool | Path |
 | --- | --- |
 | OpenCode | `~/.config/opencode/skills/<name>` |
-| Claude | `~/.claude/skills/<name>` |
+| Claude Code | `~/.claude/skills/<name>` |
+
+**Claude Desktop is not covered by `link-skills.sh`.** It keeps its own read-only skill
+store and can only be updated by importing a `.skill` archive (a zip renamed `.skill`)
+through the Save button in the app. Build one with:
+
+```bash
+bash bin/build-skill.sh <skill-name>
+```
+
+Re-import it in Desktop after any change you want reflected there — the symlinks above do
+not reach it, so Desktop will otherwise keep running the version it last imported.
 
 Re-run `link-skills.sh` whenever you add a new skill.
 
