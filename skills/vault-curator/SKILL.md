@@ -168,9 +168,12 @@ it: the body text is Jason's record and paraphrasing it loses detail he relies o
   blindly "demote one level"; that buries an already-`###` summary at `####`.
 - **Unescape.** Granola escapes for its own renderer: `\~` -> `~`, `\*` -> `*`, and the XML
   entities `&apos;` `&amp;` `&lt;` `&gt;` arrive literal. Fix all of them.
-- **Next Steps: keep the action, drop the explainer.** Granola writes each action as a bold
-  line plus an indented paragraph of rationale. Keep `- **Action** (Owner)`; drop the
-  paragraph. The owner stays in parentheses; omit it when Granola gives none.
+- **Next Steps: keep the action AND its explainer.** Granola writes each action as a bold
+  line plus an indented paragraph of rationale. Keep BOTH, exactly as written -- the
+  paragraph carries the why, the owner, and the deadline, and Jason relies on it.
+  (Corrected 2026-09-08: an earlier version of this skill dropped the paragraph, inferred
+  from older notes that happen not to have one. That was wrong and was never Jason's
+  practice. Never strip it.)
 - **Watch for a doubled summary.** Granola occasionally emits the same summary twice in one
   `<summary>` block, once at `###` and once at `#` (seen on Staffing Weekly, [[2026-08-31]]).
   Keep ONE copy -- they are the same content at two heading levels, not two sections.
