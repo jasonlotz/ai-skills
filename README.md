@@ -8,13 +8,15 @@ A collection of reusable AI agent skills for use with OpenCode and Claude.
 skills/
   <skill-name>/
     SKILL.md     — skill definition (frontmatter + instructions)
+    scripts/     — optional; helper scripts the skill invokes
+    assets/      — optional; templates and other files the skill reads
 hooks/
   <hook>.sh      — Claude Code harness hooks (e.g. SessionStart)
 bin/
   <script>.sh    — standalone CLI scripts (typically invoked by a paired skill)
 ```
 
-Each skill is a directory containing a single `SKILL.md` file with YAML frontmatter (`name`, `description`) followed by markdown instructions.
+Each skill is a directory containing a `SKILL.md` file with YAML frontmatter (`name`, `description`) followed by markdown instructions. Most skills are just that one file; a skill may also ship `scripts/` and `assets/` alongside it (see `vault-curator`).
 
 Hooks are shell scripts invoked by the Claude Code harness — see [Hooks](#hooks) below. Standalone scripts live under `bin/` — see [Bin Scripts](#bin-scripts).
 
@@ -31,7 +33,22 @@ This symlinks each skill directory into the expected locations for each tool:
 | Tool | Path |
 | --- | --- |
 | OpenCode | `~/.config/opencode/skills/<name>` |
-| Claude | `~/.claude/skills/<name>` |
+| Claude Code | `~/.claude/skills/<name>` |
+
+| Claude Desktop | `~/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/<ids>/skills/<name>` |
+
+Desktop following these symlinks is confirmed working (2026-09-08).
+
+**Claude Desktop is handled conservatively.** Its store lives under an app-managed UUID path
+and also contains Anthropic's own built-in skills (`docx`, `pdf`, `pptx`, `xlsx`,
+`skill-creator`, …), which this repo must not touch. So `link-skills.sh` only re-points
+skills Desktop **already has** — it never pushes new ones in. Desktop's skill set stays as
+you curated it, and the coding-workflow skills here don't clutter it.
+
+A Desktop app update can re-provision that store and replace a symlink with a private copy.
+Re-running `link-skills.sh` fixes it (backing up whatever it replaces into `dist/`). If
+symlinks ever stop working there, `bash bin/build-skill.sh <name>` builds a `.skill` archive
+to import through the app's Save button as a fallback.
 
 Re-run `link-skills.sh` whenever you add a new skill.
 
