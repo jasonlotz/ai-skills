@@ -24,7 +24,8 @@ into it (created by `bash ~/Workspaces/ai-skills/link-skills.sh`), so a change i
 Claude Code and OpenCode the moment it is saved -- nothing to copy or reinstall. The repo is
 git-tracked, so commit the change with a `feat:`/`fix:` message.
 
-**Claude Desktop reads the same folder** (set up 2026-09-08). Its skill store at
+**Claude Desktop reads the same folder** (set up and CONFIRMED WORKING 2026-09-08 -- Jason
+completed a full vault run in Desktop off the symlink). Its skill store at
 `~/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/<ids>/skills/`
 holds a SYMLINK to this repo rather than its own copy, so Desktop, Claude Code, and OpenCode
 all resolve to one file and cannot drift. Nothing to rebuild or re-import after an edit.

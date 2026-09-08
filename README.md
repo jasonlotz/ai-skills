@@ -37,6 +37,8 @@ This symlinks each skill directory into the expected locations for each tool:
 
 | Claude Desktop | `~/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/<ids>/skills/<name>` |
 
+Desktop following these symlinks is confirmed working (2026-09-08).
+
 **Claude Desktop is handled conservatively.** Its store lives under an app-managed UUID path
 and also contains Anthropic's own built-in skills (`docx`, `pdf`, `pptx`, `xlsx`,
 `skill-creator`, …), which this repo must not touch. So `link-skills.sh` only re-points
