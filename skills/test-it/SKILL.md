@@ -1,6 +1,6 @@
 ---
 name: test-it
-description: Generates a focused smoke test checklist based on recent changes — surfaces what to manually verify after a build session. Works standalone or as part of the scope-it → build-it → review-it → test-it → ship-it workflow.
+description: Builds a focused smoke-test checklist from recent changes, then drives it in the in-app browser together with the user. Works standalone or as part of the scope-it → build-it → review-it → test-it → ship-it workflow.
 license: MIT
 compatibility: opencode
 ---
@@ -9,13 +9,14 @@ compatibility: opencode
 
 - Inspects recent changes to understand what was built or modified
 - Reads the relevant changed files to understand intent, not just surface-level diffs
-- Outputs a concise numbered smoke test checklist — 3 to 8 items — covering the critical paths worth manually verifying
+- Outputs a concise numbered smoke test checklist — 3 to 8 items — covering the critical paths worth verifying
 - Each checklist item includes a one-line rationale explaining what could break
+- Then launches the in-app browser against the running app and drives the checklist together with the user, sharing screenshots and results
 - Works standalone or as part of the scope-it → build-it → review-it → test-it → ship-it workflow
 
 ## When to use me
 
-Use me any time you want to know: *"what should I manually verify right now?"* Common scenarios:
+Use me any time you want to know: *"what should we verify right now, and let's check it together?"* Common scenarios:
 
 - You've just finished a build session and want to smoke test before shipping
 - A `review-it` session flagged changes and you want to verify the fixes
@@ -89,6 +90,15 @@ Guidelines:
 
 ---
 
-### Step 4: Stop
+### Step 4: Verify in the browser together
 
-Output the checklist and stop. Do not suggest follow-up actions, architectural improvements, or next steps unless the user asks. Your job is the checklist.
+Don't stop at the checklist — bring the running app up and walk the critical paths with the user.
+
+1. Launch the in-app Browser pane: `preview_start` with the project's `.claude/launch.json` config name, or point it at an already-running dev server (`preview_start` with the `url`). Never start a dev server with a raw shell command — use the Browser/preview tooling.
+2. The Browser pane is a fresh, isolated session and does not share the user's login. If you hit a login page, pause and ask the user to log in ("I'll log in if necessary"), then continue. **An auth wall is never a reason to skip verification** — you are not entering credentials, just stopping at the login page so the user can sign in. Ask and wait.
+3. Drive each checklist item yourself where you can — navigate, click, `read_page`, screenshot, check the console/network, measure. For anything only the user can judge (visual taste, feel), show a screenshot and ask.
+4. Share proof as you go (screenshots, measurements, log lines) and note any item that fails so it can be fixed before shipping.
+
+If the change isn't observable in the browser (pure tooling, types, non-UI logic), say so and rely on the checklist plus build/lint instead of forcing a browser session.
+
+Do not write automated test code or test scaffolding, and do not comment on code quality — that is `review-it`'s job.

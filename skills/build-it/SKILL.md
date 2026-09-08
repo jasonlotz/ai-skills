@@ -29,9 +29,13 @@ If you hit an ambiguous decision that affects behavior, design, or architecture 
 
 Small, inconsequential decisions (e.g. variable names, minor code style) are fine to handle with judgment. Anything that affects how the feature works or how the codebase is structured warrants a pause.
 
-### Testing
+### Testing & verification
 
-The user tests manually. Do not run the test suite, do not write new tests, and do not add test scaffolding unless explicitly asked. Your job is to write the implementation code.
+When a change is observable in the running app, verify it in the browser **together** — don't hand it back for the user to check on their own server. Launch the in-app Browser pane (`preview_start` with the project's `.claude/launch.json` config name, or point it at an already-running dev server) and drive the verification yourself: navigate, screenshot, read the page, check the console/network, measure what you can. Share the proof (a screenshot, a measurement, a log line) rather than describing it.
+
+The Browser pane is a fresh, isolated session — it does not share the user's login. If you land on a login page, pause and ask the user to log in ("I'll log in if necessary"), then continue verifying together. **An auth wall is never a reason to skip verification.** "The app is behind OAuth so I verified another way" is the wrong call — you are not being asked to enter credentials, only to stop at the login page and let the user sign in. Ask and wait.
+
+Still: do not run the automated test suite, write new tests, or add test scaffolding unless explicitly asked. Browser verification confirms the change works — it is not a substitute for the user's own eyes, so surface what you checked and let them weigh in.
 
 ### Commits
 
