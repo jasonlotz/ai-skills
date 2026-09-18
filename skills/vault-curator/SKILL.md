@@ -81,9 +81,42 @@ periodic "health audit" run mode (below) enforces the invariant across the whole
 
 Hubs are not only clients/projects/accounts. There are also PARTNERS (see below). Jason's
 notes are mostly work, but the vault
-also has personal topics (e.g. Core Moto, hobbies, Freshline, finances). Those get the same
+also has personal topics (hobbies, Freshline, finances). Those get the same
 treatment where it makes sense -- links, and a rollup for anything with an evolving status.
 The goal is a healthy VAULT, not just an account tracker.
+
+### Top-level organizations (changed 2026-09-17)
+
+The vault holds more than one ORGANIZATION, and each gets its own top-level folder with the
+same internal shape:
+
+```
+cleartelligence/    clients/  partners/  people/  projects/   (Jason's employer)
+coremoto/           people/   projects/                        (Core Moto, the expedition club)
+personal/           hobbies/  freshline/  development/         (genuinely personal topics)
+```
+
+**`[[Core Moto]]` was promoted out of `personal/` to its own top-level folder on 2026-09-17,
+per Jason: "coremoto is more than a hobby and will continue to grow into something bigger."**
+It is an expedition motorcycle club heading toward an LLC with a founders group, a member
+platform, partners, and eventually revenue -- so it needs `people/` and `projects/` of its
+own rather than living as one note under hobbies. Treat it as a peer of `cleartelligence/`,
+not a sub-topic of `personal/`.
+
+Practical consequences:
+
+- Core Moto people go in `coremoto/people/`, not `cleartelligence/people/`. The linker
+  auto-discovers every `people/` folder, so they become linkable as soon as they exist.
+- Core Moto workstreams (the member platform, the muster, the rating system) get project
+  folders under `coremoto/projects/<Project>/<Project>.md`, same folder-per-project rule.
+- Core Moto meetings take `#personal-meeting` as their context tag (see "The Tags line").
+  If Core Moto ever holds meetings with outside counterparties (a lawyer, a partner like PD),
+  revisit whether it needs its own `#coremoto-*` context tags the way CT has client/internal.
+- Obsidian resolves `[[wikilinks]]` by filename, so moving the hub out of `personal/` did not
+  break any existing link.
+
+When another organization appears later, give it the same treatment rather than filing it
+under `personal/`.
 
 ## Safety model (read first)
 
@@ -297,6 +330,13 @@ section gets one primary type (when the heading indicates one) plus one context 
   about a client attended only by Cleartelligence people is `#internal-meeting`, even with
   `[[Proceed]]` as a topic. It is a client meeting only when a client employee is on the
   attendee line.
+- **`#personal-meeting` is the third context tag** (added 2026-09-17), for meetings that sit
+  outside the Cleartelligence frame entirely: `[[Core Moto]]` founders calls, `[[Freshline]]`,
+  hobbies, finances. Both `#client-meeting` and `#internal-meeting` presuppose a CT frame, so
+  tagging a Core Moto call `#internal-meeting` conflates club business with CT internal work
+  in every tag query. **Decide the context tag by which ORGANIZATION the meeting belongs to
+  first, then by who attended.** (The [[2026-05-26]] Core Moto founders call was originally
+  mis-tagged `#internal-meeting` and was corrected when this rule was added.)
 
 ```
 ## Keith + Jason Proceed KT 6        (CT-only attendees -> internal)
@@ -647,7 +687,7 @@ new entities, name fixes, or hub summaries. Do those steps by hand around them.
 ## Verifying a run
 
 - Every `[[link]]` resolves to an existing `.md` (in `cleartelligence/`, its subfolders, or
-  `personal/`). An unresolved link usually means a spelling slipped past the registry; fix
+  `coremoto/`, or `personal/`). An unresolved link usually means a spelling slipped past the registry; fix
   it or add the alias.
 - Each meeting heading has exactly one Topics line (when it has a topic) and one Tags line,
   in that order, before the attendee line.
